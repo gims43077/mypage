@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>김상준 | 자취생 레시피</title>
+  <style>
+    /* ─── Reset & Base ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --orange: #FF6B35;
+      --orange-light: #FFF0EB;
+      --dark: #1A1A1A;
+      --gray: #6B7280;
+      --bg: #FAFAF8;
+      --white: #FFFFFF;
+      --radius: 16px;
+      --shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+      background: var(--bg);
+      color: var(--dark);
+      max-width: 480px;
+      margin: 0 auto;
+      min-height: 100vh;
+    }
+
+    /* ─── Header / Hero ─── */
+    .hero {
+      background: linear-gradient(145deg, var(--orange) 0%, #FF9A5C 100%);
+      color: var(--white);
+      padding: 56px 24px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '🍳';
+      font-size: 120px;
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      opacity: 0.15;
+      line-height: 1;
+    }
+
+    .avatar {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      margin: 0 auto 16px;
+      border: 3px solid rgba(255,255,255,0.6);
+    }
+
+    .hero h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; }
+    .hero .subtitle { margin-top: 6px; font-size: 14px; opacity: 0.85; }
+
+    .badge-row {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(255,255,255,0.22);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 999px;
+      padding: 5px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      backdrop-filter: blur(4px);
+    }
+
+    /* ─── Section ─── */
+    section { padding: 24px 16px; }
+    section + section { padding-top: 0; }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ─── Info Card ─── */
+    .info-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .info-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 18px;
+      border-bottom: 1px solid #F3F4F6;
+    }
+
+    .info-row:last-child { border-bottom: none; }
+
+    .info-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--orange-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .info-label { font-size: 12px; color: var(--gray); }
+    .info-value { font-size: 15px; font-weight: 600; margin-top: 2px; }
+
+    /* ─── SNS Button ─── */
+    .sns-btn {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px 18px;
+      text-decoration: none;
+      color: var(--dark);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .sns-btn:active { transform: scale(0.97); box-shadow: none; }
+
+    .sns-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .sns-handle { font-size: 15px; font-weight: 700; }
+    .sns-sub    { font-size: 12px; color: var(--gray); margin-top: 2px; }
+    .sns-arrow  { margin-left: auto; font-size: 18px; color: var(--gray); }
+
+    /* ─── Recipe Cards ─── */
+    .recipe-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .recipe-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .recipe-emoji {
+      font-size: 36px;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .recipe-name {
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .recipe-desc {
+      font-size: 13px;
+      color: var(--gray);
+      margin-top: 4px;
+      line-height: 1.5;
+    }
+
+    .recipe-tags {
+      display: flex;
+      gap: 6px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: var(--orange-light);
+      color: var(--orange);
+    }
+
+    /* ─── Footer ─── */
+    footer {
+      text-align: center;
+      padding: 28px 16px 40px;
+      font-size: 13px;
+      color: var(--gray);
+    }
+
+    /* ─── Desktop fallback ─── */
+    @media (min-width: 481px) {
+      body { box-shadow: 0 0 60px rgba(0,0,0,0.1); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="avatar">👨‍🍳</div>
+    <h1>김상준</h1>
+    <p class="subtitle">자취생 요리 탐구자 · 21세</p>
+    <div class="badge-row">
+      <span class="badge">🎮 게임</span>
+      <span class="badge">🍳 요리</span>
+      <span class="badge">😴 잠자기</span>
+    </div>
+  </div>
+
+  <!-- 기본 정보 -->
+  <section>
+    <h2 class="section-title">👤 기본 정보</h2>
+    <div class="info-card">
+      <div class="info-row">
+        <div class="info-icon">🙋</div>
+        <div>
+          <div class="info-label">이름</div>
+          <div class="info-value">김상준</div>
+        </div>
+      </div>
+      <div class="info-row">
+        <div class="info-icon">🎂</div>
+        <div>
+          <div class="info-label">나이</div>
+          <div class="info-value">21세</div>
+        </div>
+      </div>
+      <div class="info-row">
+        <div class="info-icon">🎓</div>
+        <div>
+          <div class="info-label">하는 일</div>
+          <div class="info-value">학생</div>
+        </div>
+      </div>
+      <div class="info-row">
+        <div class="info-icon">❤️</div>
+        <div>
+          <div class="info-label">취미</div>
+          <div class="info-value">게임 · 요리 · 잠자기</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SNS -->
+  <section>
+    <h2 class="section-title">📱 SNS</h2>
+    <a href="https://instagram.com/gims43077" target="_blank" rel="noopener" class="sns-btn">
+      <div class="sns-icon">📸</div>
+      <div>
+        <div class="sns-handle">@gims43077</div>
+        <div class="sns-sub">Instagram · 팔로우하기</div>
+      </div>
+      <span class="sns-arrow">›</span>
+    </a>
+  </section>
+
+  <!-- 레시피 추천 -->
+  <section>
+    <h2 class="section-title">🍽️ 자취생 추천 레시피</h2>
+    <div class="recipe-grid">
+
+      <div class="recipe-card">
+        <div class="recipe-emoji">🥚</div>
+        <div>
+          <div class="recipe-name">계란볶음밥</div>
+          <div class="recipe-desc">냉장고 파먹기의 정석. 밥 + 계란 + 간장 한 숟갈이면 완성!</div>
+          <div class="recipe-tags">
+            <span class="tag">⏱ 10분</span>
+            <span class="tag">💸 초저가</span>
+            <span class="tag">🔰 입문</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="recipe-card">
+        <div class="recipe-emoji">🍜</div>
+        <div>
+          <div class="recipe-name">참치 김치찌개</div>
+          <div class="recipe-desc">묵은지 + 참치캔 하나면 얼큰하고 든든한 한 끼 완성.</div>
+          <div class="recipe-tags">
+            <span class="tag">⏱ 20분</span>
+            <span class="tag">💸 저가</span>
+            <span class="tag">🌶 얼큰</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="recipe-card">
+        <div class="recipe-emoji">🧆</div>
+        <div>
+          <div class="recipe-name">두부조림</div>
+          <div class="recipe-desc">간장·고춧가루·참기름으로 뚝딱. 밥도둑 반찬 넘버원.</div>
+          <div class="recipe-tags">
+            <span class="tag">⏱ 15분</span>
+            <span class="tag">💸 초저가</span>
+            <span class="tag">🥗 건강</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="recipe-card">
+        <div class="recipe-emoji">🍝</div>
+        <div>
+          <div class="recipe-name">크림 파스타</div>
+          <div class="recipe-desc">생크림 없어도 OK! 우유 + 버터로 만드는 간단 크림소스.</div>
+          <div class="recipe-tags">
+            <span class="tag">⏱ 25분</span>
+            <span class="tag">💸 중간</span>
+            <span class="tag">✨ 특별식</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="recipe-card">
+        <div class="recipe-emoji">🥘</div>
+        <div>
+          <div class="recipe-name">부대찌개</div>
+          <div class="recipe-desc">햄·소시지·라면 사리로 혼자 먹는 푸짐한 냄비 요리.</div>
+          <div class="recipe-tags">
+            <span class="tag">⏱ 20분</span>
+            <span class="tag">💸 저가</span>
+            <span class="tag">🍺 안주</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    Made with ❤️ by 김상준 · 2026
+  </footer>
+
+</body>
+</html>
